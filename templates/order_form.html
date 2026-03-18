@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="order-section">
+
+    <div class="order-container">
+
+        <div class="order-header">
+            <h2>Place Your Order</h2>
+            <p>Fill in the form below and we'll get back to you!</p>
+        </div>
+
+        <form method="POST" class="order-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="full_name" placeholder="Juan Dela Cruz" required>
+            </div>
+
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="text" name="contact_number" placeholder="09XX XXX XXXX" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="juan@email.com" required>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-group">
+                <label>Product Name</label>
+                <input type="text" name="product_name" value="{{ request.GET.product }}" placeholder="e.g. Flushed Hoodie" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                        <label>Size <span class="optional">(Leave blank if not applicable)</span></label>
+                        <select name="size">
+                        <option value="">Select Size</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" value="1" min="1" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Delivery Option</label>
+                <select name="delivery_option" required id="deliverySelect" onchange="toggleAddress()">
+                    <option value="">Select Option</option>
+                    <option value="delivery">Delivery</option>
+                    <option value="pickup">Pickup</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="addressGroup" style="display:none;">
+                <label>Complete Delivery Address</label>
+                <textarea name="delivery_address" placeholder="House No., Street, Barangay, City, Province"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Special Instructions <span class="optional">(Optional)</span></label>
+                <textarea name="special_instructions" placeholder="Any special requests or notes..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%; text-align:center;">
+                Submit Order
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+<script>
+function toggleAddress() {
+    const select = document.getElementById('deliverySelect');
+    const addressGroup = document.getElementById('addressGroup');
+    if (select.value === 'delivery') {
+        addressGroup.style.display = 'block';
+    } else {
+        addressGroup.style.display = 'none';
+    }
+}
+</script>
+
+{% endblock %}

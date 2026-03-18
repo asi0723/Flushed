@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="products-section">
+
+    <div class="products-header">
+        <h2>All Products</h2>
+    </div>
+
+    <div class="filter-bar">
+    <a href="{% url 'products' %}" class="filter-btn {% if not request.GET.category %}active{% endif %}">All</a>
+    <a href="?category=hoodie" class="filter-btn {% if request.GET.category == 'hoodie' %}active{% endif %}">Hoodie</a>
+    <a href="?category=pants" class="filter-btn {% if request.GET.category == 'pants' %}active{% endif %}">Pants</a>
+    <a href="?category=hoodie_pants" class="filter-btn {% if request.GET.category == 'hoodie_pants' %}active{% endif %}">Hoodie Pants</a>
+    <a href="?category=shorts" class="filter-btn {% if request.GET.category == 'shorts' %}active{% endif %}">Shorts</a>
+    <a href="?category=tshirt" class="filter-btn {% if request.GET.category == 'tshirt' %}active{% endif %}">T-Shirt</a>
+    <a href="?category=cap" class="filter-btn {% if request.GET.category == 'cap' %}active{% endif %}">Cap</a>
+    <a href="?category=sando" class="filter-btn {% if request.GET.category == 'sando' %}active{% endif %}">Sando</a>
+    <a href="?category=gymfit" class="filter-btn {% if request.GET.category == 'gymfit' %}active{% endif %}">Gymfit</a>
+    <a href="?category=accessories" class="filter-btn {% if request.GET.category == 'accessories' %}active{% endif %}">Accessories</a>
+</div>
+
+    <div class="product-grid">
+        {% for product in items %}
+        <div class="product-card" onclick="window.location='{% url 'product_detail' product.pk %}'">
+            {% if product.main_image %}
+            <img src="{{ product.main_image.url }}" alt="{{ product.name }}">
+            {% endif %}
+            <div class="product-card-info">
+                <div class="product-name">{{ product.name }}</div>
+                <div class="product-price">₱{{ product.price }}</div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="no-products">No products found.</p>
+        {% endfor %}
+    </div>
+
+</section>
+
+{% endblock %}

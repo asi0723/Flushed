@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="detail-section">
+
+    <div class="detail-container">
+
+        <!-- LEFT: Main Image -->
+        <div class="detail-images">
+            {% if product.main_image %}
+            <img src="{{ product.main_image.url }}" alt="{{ product.name }}" class="main-img" id="mainImg">
+            {% endif %}
+
+            <!-- Model Photos Thumbnails -->
+            <div class="thumb-row">
+                {% if product.main_image %}
+                <img src="{{ product.main_image.url }}" class="thumb active" onclick="changeImg(this.src)">
+                {% endif %}
+                {% for photo in model_photos %}
+                <img src="{{ photo.photo.url }}" class="thumb" onclick="changeImg(this.src)">
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- RIGHT: Product Info -->
+        <div class="detail-info">
+            <p class="detail-category">{{ product.category }}</p>
+            <h1 class="detail-name">{{ product.name }}</h1>
+            <p class="detail-price">₱{{ product.price }}</p>
+
+            <div class="detail-divider"></div>
+
+            <p class="detail-description">{{ product.description }}</p>
+
+            <div class="detail-divider"></div>
+
+            {% if product.sizes %}
+            <p class="detail-sizes-label">Available Sizes</p>
+            <p class="detail-sizes">{{ product.sizes }}</p>
+            {% endif %}
+
+            <div class="stock-status">
+                {% if product.stock > 0 %}
+                <span class="in-stock">● In Stock ({{ product.stock }} left)</span>
+                {% else %}
+                <span class="out-stock">● Sold Out</span>
+                {% endif %}
+            </div>
+
+            <a href="{% url 'order_form' %}?product={{ product.name }}&size={{ product.sizes }}" class="btn-primary" style="margin-top: 32px; display: inline-block;">Order Now</a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- MODEL PHOTOS MODAL -->
+<div class="modal" id="modal" onclick="closeModal()">
+    <div class="modal-content">
+        <img src="" id="modalImg">
+    </div>
+</div>
+
+<script>
+function changeImg(src) {
+    document.getElementById('mainImg').src = src;
+    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+</script>
+
+{% endblock %}

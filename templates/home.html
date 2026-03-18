@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="brand-logo">Flushed</h1>
+        <div class="divider-line"></div>
+        <p class="tagline">spread the code &nbsp;·&nbsp; help homies</p>
+        <div class="cta-group">
+            <a href="{% url 'products' %}" class="btn-primary">Shop Now</a>
+        </div>
+    </div>
+</section>
+
+<section class="featured-strip">
+    <div class="strip-header">
+        <h2>New Drops</h2>
+        <a href="{% url 'products' %}">View All →</a>
+    </div>
+    <div class="product-grid">
+        {% for product in featured %}
+        <div class="product-card" onclick="window.location='{% url 'product_detail' product.pk %}'">
+            {% if product.main_image %}
+            <img src="{{ product.main_image.url }}" alt="{{ product.name }}">
+            {% endif %}
+            <div class="product-card-info">
+                <div class="product-name">{{ product.name }}</div>
+                <div class="product-price">₱{{ product.price }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
