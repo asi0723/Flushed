@@ -11,6 +11,7 @@ class Product(models.Model):
         ('accessories', 'Accessories'),
         ('gymfit', 'Gymfit'),
         ('sando', 'Sando'),
+        ('tank_top', 'Tank Top'),
     ]
 
     name = models.CharField(max_length=200)
