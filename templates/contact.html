@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="contact-section">
+
+    <div class="contact-hero">
+        <p class="about-label">Get In Touch</p>
+        <h1 class="about-title">Contact Us</h1>
+        <p class="about-subtitle">Spread the Code. Help Homies.</p>
+    </div>
+
+    <div class="contact-container">
+
+        <!-- LEFT: Contact Info -->
+        <div class="contact-info">
+
+            <div class="contact-block">
+                <p class="contact-label">Follow Us</p>
+                <a href="#" class="contact-link">Instagram</a>
+                <a href="#" class="contact-link">Facebook</a>
+            </div>
+
+            <div class="contact-block">
+                <p class="contact-label">Email</p>
+                <a href="mailto:flushed@email.com" class="contact-link">flushed@email.com</a>
+            </div>
+
+            <div class="contact-block">
+                <p class="contact-label">Mobile</p>
+                <a href="tel:09XXXXXXXXX" class="contact-link">09XX XXX XXXX</a>
+            </div>
+
+            <div class="contact-block">
+                <p class="contact-label">Business Hours</p>
+                <p class="contact-text">Monday - Saturday</p>
+                <p class="contact-text">9:00 AM - 6:00 PM</p>
+            </div>
+
+        </div>
+
+        <!-- RIGHT: Contact Form -->
+        <div class="contact-form-wrap">
+
+            <form method="POST" class="order-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="name" placeholder="Juan Dela Cruz" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="juan@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" placeholder="Type your message here..." style="height: 160px;" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width:100%; text-align:center;">
+                    Send Message
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% if submitted %}
+<div class="success-container" style="text-align:center; padding: 48px 0;">
+    <div class="success-icon">✓</div>
+    <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 42px; letter-spacing: 3px;">Message Sent!</h2>
+    <p style="color: rgba(255,255,255,0.5); margin-top: 12px;">We'll get back to you soon. 🤝</p>
+</div>
+{% else %}
+    <!-- the form goes here -->
+{% endif %}

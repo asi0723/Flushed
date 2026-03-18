@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="lookbook-section">
+
+    <div class="lookbook-hero">
+        <p class="about-label">Visual Diary</p>
+        <h1 class="about-title">Lookbook</h1>
+        <p class="about-subtitle">Spread the Code. Help Homies.</p>
+    </div>
+
+    <!-- FILTER -->
+    <div class="lookbook-filter">
+        <a href="{% url 'lookbook' %}" class="filter-btn {% if not request.GET.collection %}active{% endif %}">All</a>
+        <a href="?collection=latest" class="filter-btn {% if request.GET.collection == 'latest' %}active{% endif %}">Latest Drop</a>
+        <a href="?collection=season1" class="filter-btn {% if request.GET.collection == 'season1' %}active{% endif %}">Season 1</a>
+        <a href="?collection=season2" class="filter-btn {% if request.GET.collection == 'season2' %}active{% endif %}">Season 2</a>
+    </div>
+
+    <!-- PHOTO GRID -->
+    <div class="lookbook-grid">
+        {% for photo in photos %}
+        <div class="lookbook-item" onclick="openLightbox('{{ photo.photo.url }}', '{{ photo.caption }}')">
+            <img src="{{ photo.photo.url }}" alt="{{ photo.caption }}">
+            <div class="lookbook-overlay">
+                <span>View</span>
+            </div>
+        </div>
+        {% empty %}
+        <p class="no-products" style="padding: 48px;">No photos yet. Add some in the admin panel!</p>
+        {% endfor %}
+    </div>
+
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content">
+        <img src="" id="lightboxImg">
+        <p id="lightboxCaption"></p>
+        <span class="lightbox-close">✕</span>
+    </div>
+</div>
+
+<script>
+function openLightbox(src, caption) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxCaption').textContent = caption;
+    document.getElementById('lightbox').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+</script>
+
+{% endblock %}
